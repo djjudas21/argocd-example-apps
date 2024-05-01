@@ -1,0 +1,23 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+  name: sock-shop
+spec:
+  ingressClassName: public
+  rules:
+  - host: sock-shop.gazeley.uk
+    http:
+      paths:
+      - backend:
+          service:
+            name: front-end
+            port:
+              number: 80
+        path: /
+        pathType: ImplementationSpecific
+  tls:
+  - hosts:
+    - sock-shop.gazeley.uk
+    secretName: ingress-tls
